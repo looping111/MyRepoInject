@@ -57,6 +57,11 @@ dependencies {
     implementation(libs.androidx.viewpager2)
     implementation(libs.androidx.fragment.ktx)
 
+    //coroutine support
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.room.ktx)
+
     //room
     implementation(libs.androidx.room.runtime)
     ksp(libs.room.compiler)
