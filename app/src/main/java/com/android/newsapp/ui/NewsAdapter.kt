@@ -1,10 +1,12 @@
 package com.android.newsapp.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +18,7 @@ import com.android.newsapp.utils.DateFormatter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class NewsAdapter : ListAdapter<NewsEntity, MyViewHolder>(DIFF_CALLBACK) {
+class NewsAdapter (private val onBookmarkClick: (NewsEntity) -> Unit): ListAdapter<NewsEntity, MyViewHolder>(DIFF_CALLBACK) {
     class MyViewHolder(val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(news: NewsEntity) {
             binding.tvItemTitle.text = news.title
@@ -43,6 +45,15 @@ class NewsAdapter : ListAdapter<NewsEntity, MyViewHolder>(DIFF_CALLBACK) {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val news = getItem(position)
         holder.bind(news)
+        val ivBookmark = holder.binding.ivBookmark
+        if (news.isBookmarked) {
+            ivBookmark.setImageDrawable(ContextCompat.getDrawable(ivBookmark.context, R.drawable.ic_bookmarked_white))
+        } else {
+            ivBookmark.setImageDrawable(ContextCompat.getDrawable(ivBookmark.context, R.drawable.ic_bookmark_white))
+        }
+        ivBookmark.setOnClickListener {
+            onBookmarkClick(news)
+        }
     }
 
     companion object {
